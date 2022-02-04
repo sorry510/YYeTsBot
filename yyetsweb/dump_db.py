@@ -22,7 +22,7 @@ from tqdm import tqdm
 
 logging.basicConfig(level=logging.INFO)
 
-data_path = pathlib.Path(__file__).parent.joinpath("data")
+data_path = pathlib.Path(__file__).parent.joinpath("templates", "data")
 sqlite_file = data_path.joinpath("yyets.db").as_posix()
 
 mongo = pymongo.MongoClient('mongo', 27017)
@@ -153,7 +153,7 @@ def zip_file():
         zf.write(sqlite_file, "yyets_sqlite.db")
 
     logging.info("Dumping MySQL...")
-    subprocess.check_output("mysqldump -h db -u root -proot share > share.sql", shell=True)
+    subprocess.check_output("mysqldump -h mysql -u root -proot share > share.sql", shell=True)
     p = data_path.joinpath("yyets_mysql.zip").as_posix()
     logging.info("Zipping MySQL...")
     with zipfile.ZipFile(p, 'w', zipfile.ZIP_DEFLATED) as zf:
